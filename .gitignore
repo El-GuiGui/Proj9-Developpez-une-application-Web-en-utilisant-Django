@@ -2,9 +2,6 @@
 __pycache__/
 autres/
 env/
-controller/__pycache__/
-model/__pycache__/
-view/__pycache__/
 
 # Ignore all .py files
 *.py
@@ -13,13 +10,9 @@ view/__pycache__/
 !main.py
 
 # not ignore specific files
-!controller/
-!model/
-!view/
-!data_json/
 !instruction_project.md
 !README.md
 !requirements.txt
-!controller/__init__.py
-!model/__init__.py
-!view/__init__.py
+!setup.cfg
+!pyproject.toml
+!litrevu/
