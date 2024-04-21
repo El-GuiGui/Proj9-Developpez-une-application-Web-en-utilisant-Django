@@ -1,0 +1,157 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    width: 95%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.navigation {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    padding: 0 20px;
+}
+
+.menu li:last-child {
+    padding-right: 40px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.3s;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu a:hover {
+    color: #ffffff;
+    background-color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+}
+
+main#main-content {
+    background: #fff;
+    margin: 20px 0;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background: #fff;
+    color: #333;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+#footer-content {
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+/* create ticket */
+
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    /* Ajustez selon la largeur souhaitée */
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-container input[type="text"],
+.form-container textarea,
+.form-container input[type="file"] {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    /* Pour l'espace entre les champs */
+}
+
+.form-container textarea {
+    height: 100px;
+    /* Ou la hauteur que vous préférez */
+    resize: vertical;
+}
+
+.form-container .btn {
+    padding: 10px 20px;
+    background-color: #dbdbdb;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-container .btn:hover {
+    background-color: #010101;
+    color: rgb(255, 255, 255);
+}

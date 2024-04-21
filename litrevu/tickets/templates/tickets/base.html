@@ -1,0 +1,40 @@
+{% load static %}
+<html>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>LITReview
+    </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'tickets/styles.css' %}" />
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>LITReview</h1>
+            <nav class="navigation">
+                <ul class="menu">
+                    <li><a href="">Flux</a></li>
+                    <li><a href="">Posts</a></li>
+                    <li><a href="">Abonnements</a></li>
+                    <li><a href="">Se déconnecter</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer>
+            <div id="footer-content">
+                <p>© 04-2024 LITReview - GL project</p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
