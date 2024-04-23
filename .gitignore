@@ -3,9 +3,6 @@ __pycache__/
 autres/
 env/
 
-# Ignore all .py files
-*.py
-
 # not ignore main.py
 !main.py
 
