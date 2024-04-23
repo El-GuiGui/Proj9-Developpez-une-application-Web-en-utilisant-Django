@@ -1,0 +1,60 @@
+{% extends 'reviews/base.html' %}
+
+{% block title %}Créer une critique{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Modifier votre critique</h2>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="section">
+            <h3>Vous êtes en train de poster en réponse à :</h3>
+            <!-- rajouter et implementer les postes du modify ... -->
+        </div>
+        <div class="separator"></div>
+        <div class="section">
+            <h3>Votre critique</h3>
+            <div class="form-group">
+                <input type="text" name="review_headline" placeholder="Titre" required>
+            </div>
+            <div class="form-group">
+                <label>Note :</label>
+                <div class="rating">
+                    <input type="radio" id="rating0" name="rating" value="0">
+                    <label for="rating0">0</label>
+                    <input type="radio" id="rating1" name="rating" value="1">
+                    <label for="rating1">1</label>
+                    <input type="radio" id="rating2" name="rating" value="2">
+                    <label for="rating2">2</label>
+                    <input type="radio" id="rating3" name="rating" value="3">
+                    <label for="rating3">3</label>
+                    <input type="radio" id="rating4" name="rating" value="4">
+                    <label for="rating4">4</label>
+                    <input type="radio" id="rating5" name="rating" value="5">
+                    <label for="rating5">5</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <textarea name="review_body" placeholder="Commentaire" required></textarea>
+            </div>
+
+        </div>
+        <button type="submit" class="btn">Publier la critique</button>
+    </form>
+</div>
+
+
+<script>
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var preview = document.getElementById('imagePreview');
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+{% endblock %}
