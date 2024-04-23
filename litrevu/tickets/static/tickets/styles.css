@@ -103,12 +103,11 @@ footer {
 }
 
 
-/* create ticket */
+/* create and edit ticket */
 
 .form-container {
     width: 100%;
     max-width: 600px;
-    /* Ajustez selon la largeur souhaitée */
     margin: 40px auto;
     padding: 20px;
     background-color: #fff;
@@ -133,12 +132,10 @@ footer {
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-bottom: 10px;
-    /* Pour l'espace entre les champs */
 }
 
 .form-container textarea {
     height: 100px;
-    /* Ou la hauteur que vous préférez */
     resize: vertical;
 }
 
@@ -154,4 +151,16 @@ footer {
 .form-container .btn:hover {
     background-color: #010101;
     color: rgb(255, 255, 255);
+}
+
+.image-preview-container {
+    text-align: center;
+}
+
+
+#imagePreview {
+    max-width: 50%;
+    max-height: 50%;
+    display: block;
+    margin: 10px auto;
 }
