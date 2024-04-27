@@ -3,6 +3,7 @@ from django.urls import path
 from authentification.views import authentification, inscription
 from tickets.views import create_ticket, edit_ticket
 from reviews.views import create_review, modify_review, create_reponse_review
+from subscriptions.views import subscribe
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -13,4 +14,5 @@ urlpatterns = [
     path("reviews/create_review.html", create_review),
     path("reviews/modify_review.html", modify_review),
     path("reviews/create_reponse_review.html", create_reponse_review),
+    path("subscriptions/subscribe.html", subscribe),
 ]

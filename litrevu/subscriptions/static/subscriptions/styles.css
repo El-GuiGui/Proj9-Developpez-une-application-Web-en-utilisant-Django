@@ -101,3 +101,108 @@ footer {
     width: 90%;
     margin: 0 auto;
 }
+
+
+
+
+
+
+/* Subscription page*/
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-container h2 {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-container input[type="text"],
+.form-container textarea,
+.form-container input[type="file"] {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.form-container textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.form-container .btn {
+    padding: 10px 20px;
+    background-color: #dbdbdb;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-container .btn:hover {
+    background-color: #010101;
+    color: rgb(255, 255, 255);
+}
+
+.image-preview-container {
+    text-align: center;
+}
+
+
+#imagePreview {
+    max-width: 50%;
+    max-height: 50%;
+    display: block;
+    margin: 10px auto;
+}
+
+.separator {
+    margin: 40px 0;
+    border-bottom: 5px solid #eeeeee;
+}
+
+
+.rating {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+.rating input[type="radio"] {
+    display: none;
+}
+
+.rating label {
+    cursor: pointer;
+    margin: 0 15px;
+}
+
+.rating label::before {
+    content: '\2714';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.rating input[type="radio"]:checked+label::before {
+    background-color: #000000;
+    border-color: #ffffff;
+    color: #fff;
+}
