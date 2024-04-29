@@ -17,10 +17,12 @@
             <h1>LITReview</h1>
             <nav class="navigation">
                 <ul class="menu">
-                    <li><a href="">Flux</a></li>
-                    <li><a href="">Posts</a></li>
-                    <li><a href="">Abonnements</a></li>
-                    <li><a href="">Se déconnecter</a></li>
+                    <li><a href="{% url 'flux' %}">Flux</a></li>
+                    <li><a href="{% url 'posts' %}">Posts</a></li>
+                    <li><a href="{% url 'subscribe' %}">Abonnements</a></li>
+                    <li><a href="{% url 'logout' %}" onclick="return confirm('Vous allez être déconnecté !')">Se
+                            déconnecter</a>
+                    </li>
                 </ul>
             </nav>
         </header>

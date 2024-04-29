@@ -1,0 +1,43 @@
+{% extends 'feeds/base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Vos posts</h2>
+    <div id="my-posts">
+        {% for post in my_posts %}
+        <div class="post">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <div class="post-actions">
+                <a href="{% url 'edit_post' post.id %}" class="btn">Éditer</a>
+                <a href="{% url 'delete_post' post.id %}" class="btn">Supprimer</a>
+            </div>
+            <div class="separator"></div>
+            <div class="separator"></div>
+        </div>
+        {% empty %}
+        <p>Vous n'avez pas encore créé de posts.</p>
+        {% endfor %}
+    </div>
+    <div class="loading">Chargement...</div>
+</div>
+
+
+
+
+<script>
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            loadMorePosts();
+        }
+    });
+
+    function loadMorePosts() {
+        $(".loading").show();
+        setTimeout(function () {
+            $(".loading").hide();
+            $("#feed").append(`<div class="post"><h3>Nouveau Post</h3><p>Contenu du nouveau post.</p><span>Posté par: Auteur</span><div class="separator"></div></div>`);
+        }, 2000);
+    }
+</script>
+{% endblock %}

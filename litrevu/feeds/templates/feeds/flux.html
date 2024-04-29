@@ -1,0 +1,42 @@
+{% extends 'feeds/base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Flux</h2>
+    <div class="button-container">
+        <a href="#" class="btn">Demander une critique</a>
+        <a href="#" class="btn">Créer une critique</a>
+    </div>
+    <div id="feed">
+        {% for post in posts %}
+        <div class="post">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <span>Posté par: {{ post.author }}</span>
+            <div class="separator"></div>
+            <div class="separator"></div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="loading">Chargement...</div>
+</div>
+
+
+
+
+<script>
+    $(window).scroll(function () {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            loadMorePosts();
+        }
+    });
+
+    function loadMorePosts() {
+        $(".loading").show();
+        setTimeout(function () {
+            $(".loading").hide();
+            $("#feed").append(`<div class="post"><h3>Nouveau Post</h3><p>Contenu du nouveau post.</p><span>Posté par: Auteur</span><div class="separator"></div></div>`);
+        }, 2000);
+    }
+</script>
+{% endblock %}
