@@ -3,13 +3,13 @@
 {% block content %}
 <div class="auth-form">
     <form method="post" action="">
-
+        {% csrf_token %}
         <h2>Inscrivez-vous</h2>
         <input type="text" name="username" placeholder="Nom d'utilisateur" required>
         <input type="password" name="password1" placeholder="Mot de passe" required>
         <input type="password" name="password2" placeholder="Confirmer mot de passe" required>
         <button type="submit" class="btn">S'inscrire</button>
-        <a href="login.html" class="btn btn-secondary">Retour</a>
+        <a href="{% url 'login' %}" class="btn btn-secondary">Retour</a>
     </form>
 </div>
 {% endblock %}
