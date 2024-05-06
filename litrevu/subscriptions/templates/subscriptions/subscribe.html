@@ -4,39 +4,51 @@
 <div class="form-container">
     <div class="form-group">
         <h2>Suivre d'autres utilisateurs</h2>
-        <form action="" method="post">
+        <form action="{% url 'subscribe' %}" method="post">
             {% csrf_token %}
             <input type="text" id="user_to_follow" name="user_to_follow" placeholder="Entrez le nom d'utilisateur"
                 required>
             <button type="submit" class="btn">Suivre</button>
         </form>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %}class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 
     <div class="separator"></div>
+
     <h2>Abonnements</h2>
-    <div class="form-group">
-        <div class="subscription-list">
-            {% for user in followed_users %}
-            <div class="form-group">
-                <span>{{ user.username }}</span>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn">Ne plus suivre</button>
-                </form>
-            </div>
-            {% endfor %}
+    <div class="subscription-list">
+        {% for follow in followed_users %}
+        <div class="form-group">
+            <span>{{ follow.followed_user.username }}</span>
+            <form action="{% url 'subscribe' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="unfollow_user_id" value="{{ follow.followed_user.id }}">
+                <button type="submit" class="btn">Ne plus suivre</button>
+            </form>
         </div>
+        {% empty %}
+        <p>Vous ne suivez personne pour le moment.</p>
+        {% endfor %}
     </div>
+
     <div class="separator"></div>
-    <div class="form-group">
-        <h2>Abonnés</h2>
-        <div class="followers-list">
-            {% for follower in followers %}
-            <div class="form-group">
-                <span>{{ follower.username }}</span>
-            </div>
-            {% endfor %}
+
+    <h2>Abonnés</h2>
+    <div class="followers-list">
+        {% for follower in followers %}
+        <div class="form-group">
+            <span>{{ follower.user.username }}</span>
         </div>
+        {% empty %}
+        <p>Aucun utilisateur ne vous suit pour le moment.</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

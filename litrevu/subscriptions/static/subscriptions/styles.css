@@ -206,3 +206,68 @@ footer {
     border-color: #ffffff;
     color: #fff;
 }
+
+
+/* Autres */
+/* Abonnements */
+.subscription-list {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-list .form-group {
+    margin: 10px 0;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form-group span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.form-group form {
+    margin: 0;
+}
+
+
+/* Abonnés */
+.followers-list {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.followers-list .form-group {
+    margin: 10px 0;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.followers-list span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.followers-list form {
+    margin: 0;
+}

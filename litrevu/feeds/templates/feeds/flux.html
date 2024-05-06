@@ -4,8 +4,8 @@
 <div class="form-container">
     <h2>Flux</h2>
     <div class="button-container">
-        <a href="#" class="btn">Demander une critique</a>
-        <a href="#" class="btn">Créer une critique</a>
+        <a href="{% url 'create_ticket' %}" class="btn">Demander une critique</a>
+        <a href="{% url 'create_review' %}" class="btn">Créer une critique</a>
     </div>
     <div id="feed">
         {% for post in posts %}
