@@ -271,3 +271,33 @@ footer {
 .followers-list form {
     margin: 0;
 }
+
+
+
+/* Subscriptions lists */
+#suggestions {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+#suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 2px solid #eee;
+}
+
+#suggestions li:last-child {
+    border-bottom: none;
+}
+
+#suggestions li:hover {
+    background-color: #f9f9f9;
+}

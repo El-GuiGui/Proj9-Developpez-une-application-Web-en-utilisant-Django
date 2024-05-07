@@ -3,12 +3,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import UserFollows
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 
 
 @login_required
 def subscribe(request):
     followed_users = UserFollows.objects.filter(user=request.user)
     followers = UserFollows.objects.filter(followed_user=request.user)
+
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        query = request.GET.get("term", "")
+        users = User.objects.filter(username__icontains=query).exclude(username=request.user.username)
+        results = [user.username for user in users]
+        return JsonResponse(results, safe=False)
 
     if request.method == "POST":
         # Pour la suivie d'utilisateurs
