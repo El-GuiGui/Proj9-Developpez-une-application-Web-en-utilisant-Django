@@ -1,11 +1,5 @@
 from django.contrib import admin
+from .models import Ticket, Review
 
-# Register your models here.
-# listings/admin.py
-"""
-from django.contrib import admin
-
-from listings.models import Band
-
-admin.site.register(Band)
-"""
+admin.site.register(Ticket)
+admin.site.register(Review)

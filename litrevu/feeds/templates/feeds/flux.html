@@ -11,15 +11,21 @@
         {% for post in posts %}
         <div class="post">
             <h3>{{ post.title }}</h3>
-            <p>{{ post.content }}</p>
-            <span>Posté par: {{ post.author }}</span>
-            <div class="separator"></div>
-            <div class="separator"></div>
+            <p>{{ post.description }}</p>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Image pour {{ post.title }}" style="width:100%;" />
+            {% else %}
+            <p>Pas d'image disponible.</p>
+            {% endif %}
+            <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
         </div>
+        {% empty %}
+        <p>Aucun post à afficher.</p>
         {% endfor %}
     </div>
     <div class="loading">Chargement...</div>
 </div>
+
 
 
 
@@ -35,7 +41,7 @@
         $(".loading").show();
         setTimeout(function () {
             $(".loading").hide();
-            $("#feed").append(`<div class="post"><h3>Nouveau Post</h3><p>Contenu du nouveau post.</p><span>Posté par: Auteur</span><div class="separator"></div></div>`);
+            $("#flux").append(`<div class="post"><h3>Nouveau Post</h3><p>Contenu du nouveau post.</p><span>Posté par: Auteur</span><div class="separator"></div></div>`);
         }, 2000);
     }
 </script>
