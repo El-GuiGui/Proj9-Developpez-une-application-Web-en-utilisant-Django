@@ -5,9 +5,8 @@ from subscriptions.models import UserFollows
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 from reviews.models import Review
-from django.contrib import messages
-from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, Http404
 
 
 @login_required
@@ -32,21 +31,28 @@ def posts(request):
     reviews = Review.objects.filter(user=request.user)
     tickets = Ticket.objects.filter(user=request.user)
 
-    posts = sorted(list(reviews) + list(tickets), key=lambda x: x.created_at, reverse=True)
-    return render(request, "feeds/posts.html", {"my_posts": posts})
+    return render(request, "feeds/posts.html", {"my_reviews": reviews, "my_tickets": tickets})
+
+
+@csrf_exempt
+def delete_ticket(request, ticket_id):
+    if request.method == "POST":
+        ticket = get_object_or_404(Ticket, id=ticket_id)
+        if ticket.user == request.user:
+            ticket.delete()
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"error": "Unauthorized"}, status=403)
+    return JsonResponse({"error": "Invalid request method"}, status=400)
 
 
 @csrf_exempt
 def delete_review(request, review_id):
-    if request.method == "DELETE":
-        review = get_object_or_404(Review, id=review_id)
-        review.delete()
-        return HttpResponse("Supprimé", status=204)
-    return HttpResponse("Méthode non autorisée", status=405)
-
-
-def modify_review(request, review_id):
-    review = get_object_or_404(Review, id=review_id)
     if request.method == "POST":
-        return redirect("flux")
-    return render(request, "reviews/modify_review.html", {"review": review})
+        review = get_object_or_404(Review, id=review_id)
+        if review.user == request.user:
+            review.delete()
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"error": "Unauthorized"}, status=403)
+    return JsonResponse({"error": "Invalid request method"}, status=400)

@@ -3,37 +3,43 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Review, Ticket
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .forms import ReviewForm, TicketForm
 
 
 @login_required
 def create_review(request):
     if request.method == "POST":
-        ticket_id = request.POST.get("ticket_id")
-        ticket = Ticket.objects.get(id=ticket_id)
-        Review.objects.create(
-            ticket=ticket,
-            user=request.user,
-            headline=request.POST.get("review_headline"),
-            rating=request.POST.get("rating"),
-            body=request.POST.get("review_body"),
-        )
-        return redirect("flux")
-    return render(request, "reviews/create_review.html")
+        ticket_form = TicketForm(request.POST, request.FILES)
+        review_form = ReviewForm(request.POST)
+        if ticket_form.is_valid() and review_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            return redirect("posts")
+    else:
+        ticket_form = TicketForm()
+        review_form = ReviewForm()
+    return render(request, "reviews/create_review.html", {"ticket_form": ticket_form, "review_form": review_form})
 
 
 @login_required
 def create_reponse_review(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     if request.method == "POST":
-        Review.objects.create(
-            ticket=ticket,
-            user=request.user,
-            headline=request.POST.get("review_headline"),
-            rating=request.POST.get("rating"),
-            body=request.POST.get("review_body"),
-        )
-        return redirect("flux")
-    return render(request, "reviews/create_response_review.html", {"ticket": ticket})
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            return redirect("posts")
+    else:
+        review_form = ReviewForm()
+    return render(request, "reviews/create_reponse_review.html", {"ticket": ticket, "review_form": review_form})
 
 
 def modify_review(request):

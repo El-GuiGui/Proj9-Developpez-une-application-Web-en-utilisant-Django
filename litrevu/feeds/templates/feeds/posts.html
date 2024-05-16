@@ -1,56 +1,73 @@
 {% extends 'feeds/base.html' %}
+{% load custom_filters %}
 
 {% block content %}
 <div class="form-container">
     <h2>Vos posts</h2>
     <div id="my-posts">
-        {% for post in my_posts %}
+        <h3>Vos critiques</h3>
+        {% for post in my_reviews %}
+        <div class="post">
+            <h3>{{ post.headline }}</h3>
+            <p>{{ post.body }}</p>
+            <p>Note: {{ post.rating }}</p>
+            {% if post.ticket.image %}
+            <img src="{{ post.ticket.image.url }}" alt="Image pour {{ post.headline }}" style="width:100%;">
+            {% endif %}
+            <div class="post-actions">
+                <a href="{% url 'modify_review' post.id %}" class="btn">Éditer</a>
+                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'review'); return false;">Supprimer</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <h3>Vos tickets</h3>
+        {% for post in my_tickets %}
         <div class="post">
             <h3>{{ post.title }}</h3>
             <p>{{ post.description }}</p>
             {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Image pour {{ post.title }}" style="width:100%;" />
-            {% else %}
-            <p>Pas d'image disponible.</p>
+            <img src="{{ post.image.url }}" alt="Image pour {{ post.title }}" style="width:100%;">
             {% endif %}
-            <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
             <div class="post-actions">
-                <a href="{% url 'modify_review' post.id %}" class="btn">Éditer</a>
-                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}); return false;">Supprimer</a>
+                <a href="{% url 'edit_ticket' post.id %}" class="btn">Éditer</a>
+                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'ticket'); return false;">Supprimer</a>
             </div>
         </div>
-        {% empty %}
-        <p>Vous n'avez pas encore créé de posts.</p>
         {% endfor %}
     </div>
-    <div class="loading">Chargement...</div>
 </div>
 
 
-
-
 <script>
-    function confirmDelete(postId) {
+    function confirmDelete(postId, type) {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        let url = '';
+        if (type === 'review') {
+            url = `/delete_review/${postId}/`;
+        } else {
+            url = `/delete_ticket/${postId}/`;
+        }
         if (confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
-            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            fetch(`/delete_review/${postId}/`, {
-                method: 'DELETE',
+            fetch(url, {
+                method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     'X-CSRFToken': csrfToken
                 },
-            })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.reload();
-                    } else {
-                        alert('Erreur lors de la suppression');
-                    }
-                })
-                .catch(error => alert('Erreur: ' + error));
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Échec de la suppression: ' + response.statusText);
+                }
+            }).catch(error => {
+                console.error('Erreur:', error);
+            });
         }
     }
 </script>
+
 
 
 <script>

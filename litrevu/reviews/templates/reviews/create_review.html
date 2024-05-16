@@ -5,58 +5,69 @@
 {% block content %}
 <div class="form-container">
     <h2>Créer une critique</h2>
-    <form method="post" action="" enctype="multipart/form-data">
+    <form method="post" action="{% url 'create_review' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="section">
             <h3>Informations livre/article</h3>
             <div class="form-group">
-                <input type="text" name="book_title" placeholder="Titre" required>
+                <input type="text" name="title" placeholder="Titre" class="form-control"
+                    value="{{ ticket_form.title.value|default_if_none:'' }}" required>
+                {{ ticket_form.title.errors }}
             </div>
             <div class="form-group">
-                <textarea name="book_description" placeholder="Description" required></textarea>
+                <textarea name="description" placeholder="Description" class="form-control"
+                    required>{{ ticket_form.description.value|default_if_none:'' }}</textarea>
+                {{ ticket_form.description.errors }}
             </div>
             <div class="form-group image-preview-container">
                 <h3>Image</h3>
-                <input type="file" name="image" id="imageUpload" onchange="previewImage(this);">
-                {% if ticket.image %}
-                <img src="{{ ticket.image.url }}" alt="Image actuelle" id="imagePreview" class="ticket-image-preview">
-                {% else %}
+                <input type="file" name="image" id="imageUpload" class="form-control-file"
+                    onchange="previewImage(this);">
                 <img src="" alt="Aperçu de l'image" id="imagePreview" style="display: none;">
-                {% endif %}
+                {{ ticket_form.image.errors }}
             </div>
         </div>
         <div class="separator"></div>
         <div class="section">
             <h3>Votre critique</h3>
             <div class="form-group">
-                <input type="text" name="review_headline" placeholder="Titre" required>
+                <input type="text" name="headline" placeholder="Titre" class="form-control"
+                    value="{{ review_form.headline.value|default_if_none:'' }}" required>
+                {{ review_form.headline.errors }}
             </div>
             <div class="form-group">
                 <label>Note :</label>
                 <div class="rating">
-                    <input type="radio" id="rating0" name="rating" value="0">
+                    {{ review_form.rating.errors }}
+                    <input type="radio" id="rating0" name="rating" value="0" {{
+                        review_form.rating.value|stringformat:"s"=="0" |yesno:"checked," }}>
                     <label for="rating0">0</label>
-                    <input type="radio" id="rating1" name="rating" value="1">
+                    <input type="radio" id="rating1" name="rating" value="1" {{
+                        review_form.rating.value|stringformat:"s"=="1" |yesno:"checked," }}>
                     <label for="rating1">1</label>
-                    <input type="radio" id="rating2" name="rating" value="2">
+                    <input type="radio" id="rating2" name="rating" value="2" {{
+                        review_form.rating.value|stringformat:"s"=="2" |yesno:"checked," }}>
                     <label for="rating2">2</label>
-                    <input type="radio" id="rating3" name="rating" value="3">
+                    <input type="radio" id="rating3" name="rating" value="3" {{
+                        review_form.rating.value|stringformat:"s"=="3" |yesno:"checked," }}>
                     <label for="rating3">3</label>
-                    <input type="radio" id="rating4" name="rating" value="4">
+                    <input type="radio" id="rating4" name="rating" value="4" {{
+                        review_form.rating.value|stringformat:"s"=="4" |yesno:"checked," }}>
                     <label for="rating4">4</label>
-                    <input type="radio" id="rating5" name="rating" value="5">
+                    <input type="radio" id="rating5" name="rating" value="5" {{
+                        review_form.rating.value|stringformat:"s"=="5" |yesno:"checked," }}>
                     <label for="rating5">5</label>
                 </div>
             </div>
             <div class="form-group">
-                <textarea name="review_body" placeholder="Commentaire" required></textarea>
+                <textarea name="body" placeholder="Commentaire" class="form-control"
+                    required>{{ review_form.body.value|default_if_none:'' }}</textarea>
+                {{ review_form.body.errors }}
             </div>
-
         </div>
         <button type="submit" class="btn">Publier la critique</button>
     </form>
 </div>
-
 
 <script>
     function previewImage(input) {
