@@ -164,6 +164,29 @@ footer {
 
 
 
+
+
+.btn {
+    margin: 20 80px;
+    padding: 10px 20px;
+    background-color: #dbdbdb;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+.btn:hover {
+    background-color: #010101;
+    color: white;
+}
+
+
+
+
+
 .post {
     padding: 15px;
     background-color: white;

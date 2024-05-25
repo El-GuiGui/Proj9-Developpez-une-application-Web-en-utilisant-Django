@@ -7,23 +7,40 @@ from django.shortcuts import redirect, get_object_or_404
 from reviews.models import Review
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, Http404
+from django.contrib.auth.models import User
 
 
 @login_required
 def flux(request):
-    followed_ids = UserFollows.objects.filter(user=request.user).values_list("followed_user_id", flat=True)
-    print("Followed IDs:", followed_ids)
+    followed_users = UserFollows.objects.filter(user=request.user).values_list("followed_user_id", flat=True)
 
-    tickets = Ticket.objects.filter(user_id__in=followed_ids)
-    print("Tickets:", tickets)
+    # Tickets des utilisateurs suivis
+    followed_tickets = Ticket.objects.filter(user_id__in=followed_users)
 
-    reviews = Review.objects.filter(user_id__in=followed_ids)
-    print("Reviews:", reviews)
+    # Critiques des utilisateurs suivis
+    followed_reviews = Review.objects.filter(user_id__in=followed_users)
 
-    posts = sorted(chain(tickets, reviews), key=lambda post: post.created_at, reverse=True)
-    print("Posts:", posts)
+    # Critiques en réponse aux tickets des utilisateurs suivis
+    reviews_of_followed_tickets = Review.objects.filter(ticket__user_id__in=followed_users)
 
-    return render(request, "feeds/flux.html", {"posts": posts})
+    # Critiques en réponse aux tickets de l'utilisateur connecté
+    my_ticket_reviews = Review.objects.filter(ticket__user=request.user)
+
+    # Posts de l'utilisateur connecté
+    my_tickets = Ticket.objects.filter(user=request.user)
+    my_reviews = Review.objects.filter(user=request.user)
+
+    # Ajouter une liste des tickets qui ont déjà une critique
+    tickets_with_reviews = [review.ticket.id for review in Review.objects.all()]
+    followed_tickets = followed_tickets.exclude(id__in=reviews_of_followed_tickets.values_list("ticket_id", flat=True))
+    # Combiner et trier les posts
+    posts = sorted(
+        chain(followed_tickets, followed_reviews, reviews_of_followed_tickets),
+        key=lambda post: post.created_at,
+        reverse=True,
+    )
+
+    return render(request, "feeds/flux.html", {"posts": posts, "tickets_with_reviews": tickets_with_reviews})
 
 
 @login_required

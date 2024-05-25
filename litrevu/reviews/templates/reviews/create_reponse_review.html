@@ -5,7 +5,7 @@
 {% block content %}
 <div class="form-container">
     <h2>Créer une critique</h2>
-    <form method="post" action="{% url 'create_reponse_review' %}" enctype="multipart/form-data">
+    <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="section">
             <h3>Vous êtes en train de poster en réponse à :</h3>
@@ -13,7 +13,8 @@
                 <h4>{{ ticket.title }}</h4>
                 <p>{{ ticket.description }}</p>
                 {% if ticket.image %}
-                <img src="{{ ticket.image.url }}" alt="Image pour {{ ticket.title }}">
+                <img src="{{ ticket.image.url }}" alt="Image pour {{ ticket.title }}"
+                    style="max-width: 50%; max-height: 50%; display: block; margin: 10px auto;">
                 {% endif %}
             </div>
         </div>

@@ -28,7 +28,7 @@ def create_review(request):
 
 @login_required
 def create_reponse_review(request, ticket_id):
-    ticket = Ticket.objects.get(id=ticket_id)
+    ticket = get_object_or_404(Ticket, id=ticket_id)
     if request.method == "POST":
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
@@ -55,6 +55,7 @@ def modify_review(request, id):
     return render(request, "reviews/modify_review.html", {"form": form, "review": review})
 
 
+@login_required
 def flux(request):
     followed_users = User.objects.filter(followers__follower=request.user).values_list("id", flat=True)
 
