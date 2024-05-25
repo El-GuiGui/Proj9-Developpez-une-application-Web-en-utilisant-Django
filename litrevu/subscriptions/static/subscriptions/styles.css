@@ -130,7 +130,7 @@ footer {
 .form-container input[type="text"],
 .form-container textarea,
 .form-container input[type="file"] {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;

@@ -203,3 +203,14 @@ footer {
     border-color: #ffffff;
     color: #fff;
 }
+
+
+/* Image size for modify */
+
+#ticketImagePreview,
+#imagePreview {
+    max-width: 50%;
+    max-height: 50%;
+    display: block;
+    margin: 10px auto;
+}

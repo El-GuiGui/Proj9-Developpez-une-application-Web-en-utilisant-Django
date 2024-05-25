@@ -4,7 +4,7 @@
 <div class="form-container">
     <h2>Flux</h2>
     <div class="button-container">
-        <a href="{% url 'create_ticket' %}" class="btn">Demander une critique</a>
+        <a href="{% url 'create_ticket' %}" class="btn">Demander critique</a>
         <a href="{% url 'create_review' %}" class="btn">Créer une critique</a>
     </div>
     <div id="feed">
@@ -17,6 +17,7 @@
             {% else %}
             <p>Pas d'image disponible.</p>
             {% endif %}
+            <br><br />
             <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
         </div>
         {% empty %}
@@ -25,6 +26,7 @@
     </div>
     <div class="loading">Chargement...</div>
 </div>
+
 
 
 

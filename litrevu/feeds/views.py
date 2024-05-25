@@ -29,9 +29,10 @@ def flux(request):
 @login_required
 def posts(request):
     reviews = Review.objects.filter(user=request.user)
-    tickets = Ticket.objects.filter(user=request.user)
+    tickets = Ticket.objects.filter(user=request.user).exclude(id__in=reviews.values_list("ticket_id", flat=True))
 
-    return render(request, "feeds/posts.html", {"my_reviews": reviews, "my_tickets": tickets})
+    posts = sorted(list(reviews) + list(tickets), key=lambda x: x.created_at, reverse=True)
+    return render(request, "feeds/posts.html", {"my_posts": posts})
 
 
 @csrf_exempt

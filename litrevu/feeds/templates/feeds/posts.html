@@ -1,42 +1,63 @@
 {% extends 'feeds/base.html' %}
 {% load custom_filters %}
 
+
+
 {% block content %}
 <div class="form-container">
     <h2>Vos posts</h2>
     <div id="my-posts">
         <h3>Vos critiques</h3>
-        {% for post in my_reviews %}
-        <div class="post">
+        {% for post in my_posts %}
+        {% if post.ticket %}
+        <div class="post review">
             <h3>{{ post.headline }}</h3>
             <p>{{ post.body }}</p>
             <p>Note: {{ post.rating }}</p>
-            {% if post.ticket.image %}
-            <img src="{{ post.ticket.image.url }}" alt="Image pour {{ post.headline }}" style="width:100%;">
-            {% endif %}
+            <br><br />
+            <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
+            <div class="separator"></div>
+
+            <div class="ticket-response">
+                <h4>En réponse à :</h4>
+                <h5>{{ post.ticket.title }}</h5>
+                <p>{{ post.ticket.description }}</p>
+                {% if post.ticket.image %}
+                <img src="{{ post.ticket.image.url }}" alt="Image pour {{ post.ticket.title }}">
+                {% endif %}
+                <br><br />
+                <span>Posté par: {{ post.ticket.user.username }} le {{ post.ticket.created_at|date:"d/m/Y H:i" }}</span>
+            </div>
             <div class="post-actions">
                 <a href="{% url 'modify_review' post.id %}" class="btn">Éditer</a>
                 <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'review'); return false;">Supprimer</a>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
-
+        <div class="separator"></div>
         <h3>Vos tickets</h3>
-        {% for post in my_tickets %}
-        <div class="post">
+        {% for post in my_posts %}
+        {% if not post.ticket %}
+        <div class="post ticket">
             <h3>{{ post.title }}</h3>
             <p>{{ post.description }}</p>
             {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Image pour {{ post.title }}" style="width:100%;">
+            <img src="{{ post.image.url }}" alt="Image pour {{ post.title }}">
             {% endif %}
+            <br><br />
+            <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
             <div class="post-actions">
                 <a href="{% url 'edit_ticket' post.id %}" class="btn">Éditer</a>
                 <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'ticket'); return false;">Supprimer</a>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
+
+
 
 
 <script>

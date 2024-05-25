@@ -19,7 +19,7 @@ def create_review(request):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            return redirect("posts")
+            return redirect("flux")
     else:
         ticket_form = TicketForm()
         review_form = ReviewForm()
@@ -28,7 +28,7 @@ def create_review(request):
 
 @login_required
 def create_reponse_review(request, ticket_id):
-    ticket = get_object_or_404(Ticket, id=ticket_id)
+    ticket = Ticket.objects.get(id=ticket_id)
     if request.method == "POST":
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
@@ -36,14 +36,23 @@ def create_reponse_review(request, ticket_id):
             review.user = request.user
             review.ticket = ticket
             review.save()
-            return redirect("posts")
+            return redirect("flux")
     else:
         review_form = ReviewForm()
-    return render(request, "reviews/create_reponse_review.html", {"ticket": ticket, "review_form": review_form})
+    return render(request, "reviews/create_reponse_review.html", {"review_form": review_form, "ticket": ticket})
 
 
-def modify_review(request):
-    return render(request, "reviews/modify_review.html")
+@login_required
+def modify_review(request, id):
+    review = get_object_or_404(Review, id=id)
+    if request.method == "POST":
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect("posts")
+    else:
+        form = ReviewForm(instance=review)
+    return render(request, "reviews/modify_review.html", {"form": form, "review": review})
 
 
 def flux(request):
