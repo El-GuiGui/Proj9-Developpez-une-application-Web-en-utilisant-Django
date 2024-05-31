@@ -31,8 +31,9 @@
                 <span>Posté par: {{ post.ticket.user.username }} le {{ post.ticket.created_at|date:"d/m/Y H:i" }}</span>
             </div>
             <div class="post-actions">
-                <a href="{% url 'modify_review' post.id %}" class="btn">Éditer</a>
-                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'review'); return false;">Supprimer</a>
+                <a href="{% url 'modify_review' post.id %}" class="btn">Éditer ce post</a>
+                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'review'); return false;">Supprimer ce
+                    post</a>
             </div>
         </div>
         {% endif %}
@@ -51,8 +52,9 @@
             <br><br />
             <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
             <div class="post-actions">
-                <a href="{% url 'edit_ticket' post.id %}" class="btn">Éditer</a>
-                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'ticket'); return false;">Supprimer</a>
+                <a href="{% url 'edit_ticket' post.id %}" class="btn">Éditer ce post</a>
+                <a href="#" class="btn" onclick="confirmDelete({{ post.id }}, 'ticket'); return false;">Supprimer ce
+                    post</a>
             </div>
         </div>
         {% endif %}
@@ -92,21 +94,4 @@
     }
 </script>
 
-
-
-<script>
-    $(window).scroll(function () {
-        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            loadMorePosts();
-        }
-    });
-
-    function loadMorePosts() {
-        $(".loading").show();
-        setTimeout(function () {
-            $(".loading").hide();
-            $("#feed").append(`<div class="post"><h3>Nouveau Post</h3><p>Contenu du nouveau post.</p><span>Posté par: Auteur</span><div class="separator"></div></div>`);
-        }, 2000);
-    }
-</script>
 {% endblock %}

@@ -40,29 +40,13 @@
             <br><br />
             <span>Posté par: {{ post.user.username }} le {{ post.created_at|date:"d/m/Y H:i" }}</span>
             <br><br />
-            <a href="{% url 'create_reponse_review' post.id %}" class="btn">Répondre</a>
+            <a href="{% url 'create_reponse_review' post.id %}" class="btn">Répondre à ce ticket</a>
         </div>
         {% endif %}
         {% empty %}
         <p>Aucun post à afficher.</p>
         {% endfor %}
     </div>
-    <div class="loading">Chargement...</div>
 </div>
 
-<script>
-    $(window).scroll(function () {
-        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            loadMorePosts();
-        }
-    });
-
-    function loadMorePosts() {
-        $(".loading").show();
-        setTimeout(function () {
-            $(".loading").hide();
-            $("#flux").append(`<div class="post"><h3>Nouveau Post</h3><p>Contenu du nouveau post.</p><span>Posté par: Auteur</span><div class="separator"></div></div>`);
-        }, 2000);
-    }
-</script>
 {% endblock %}
