@@ -13,12 +13,16 @@ def subscribe(request):
 
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         query = request.GET.get("term", "")
-        users = User.objects.filter(username__icontains=query).exclude(username=request.user.username)
+        users = (
+            User.objects.filter(username__icontains=query)
+            .exclude(username=request.user.username)
+            .exclude(id__in=followed_users.values_list("followed_user_id", flat=True))
+            .exclude(username="admin")
+        )
         results = [user.username for user in users]
         return JsonResponse(results, safe=False)
 
     if request.method == "POST":
-        # Pour la suivie d'utilisateurs
         if "user_to_follow" in request.POST:
             username_to_follow = request.POST.get("user_to_follow")
             if username_to_follow:
@@ -35,7 +39,6 @@ def subscribe(request):
                 except User.DoesNotExist:
                     messages.error(request, "Aucun utilisateur trouvé avec ce nom d'utilisateur.")
 
-        # Pour le désabonnement
         elif "unfollow_user_id" in request.POST:
             user_id_to_unfollow = request.POST.get("unfollow_user_id")
             if user_id_to_unfollow:

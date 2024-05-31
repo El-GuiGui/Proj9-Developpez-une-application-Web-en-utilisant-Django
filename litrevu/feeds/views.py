@@ -23,24 +23,25 @@ def flux(request):
     # Critiques en réponse aux tickets des utilisateurs suivis
     reviews_of_followed_tickets = Review.objects.filter(ticket__user_id__in=followed_users)
 
-    # Critiques en réponse aux tickets de l'utilisateur connecté
-    my_ticket_reviews = Review.objects.filter(ticket__user=request.user)
-
-    # Posts de l'utilisateur connecté
-    my_tickets = Ticket.objects.filter(user=request.user)
-    my_reviews = Review.objects.filter(user=request.user)
-
     # Ajouter une liste des tickets qui ont déjà une critique
-    tickets_with_reviews = [review.ticket.id for review in Review.objects.all()]
-    followed_tickets = followed_tickets.exclude(id__in=reviews_of_followed_tickets.values_list("ticket_id", flat=True))
+    tickets_with_reviews = set(Review.objects.values_list("ticket_id", flat=True))
+
+    # Exclure les tickets des utilisateurs suivis qui ont déjà une critique
+    followed_tickets = followed_tickets.exclude(id__in=tickets_with_reviews)
+
+    # Fusionner et éliminer les doublons des critiques
+    combined_reviews = list(followed_reviews) + [
+        review for review in reviews_of_followed_tickets if review not in followed_reviews
+    ]
+
     # Combiner et trier les posts
     posts = sorted(
-        chain(followed_tickets, followed_reviews, reviews_of_followed_tickets),
+        chain(followed_tickets, combined_reviews),
         key=lambda post: post.created_at,
         reverse=True,
     )
 
-    return render(request, "feeds/flux.html", {"posts": posts, "tickets_with_reviews": tickets_with_reviews})
+    return render(request, "feeds/flux.html", {"posts": posts, "tickets_with_reviews": list(tickets_with_reviews)})
 
 
 @login_required

@@ -59,7 +59,7 @@
         const inputField = document.querySelector('#user_to_follow');
         inputField.addEventListener('input', function (e) {
             const searchTerm = e.target.value;
-            if (searchTerm.length > 1) {
+            if (searchTerm.length > 0) {
                 fetch(`{% url 'subscribe' %}?term=${searchTerm}`, {
                     method: 'GET',
                     headers: {
@@ -72,6 +72,8 @@
                         updateSuggestions(data);
                     })
                     .catch(error => console.error('Error:', error));
+            } else {
+                updateSuggestions([]);
             }
         });
 
@@ -90,7 +92,5 @@
             suggestions.style.display = users.length > 0 ? 'block' : 'none';
         }
     });
-
 </script>
-
 {% endblock %}
