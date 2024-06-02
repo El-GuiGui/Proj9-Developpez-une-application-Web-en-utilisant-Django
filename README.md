@@ -190,3 +190,13 @@ Voici quelques comptes utilisateur pour tester l'application :
 - `/feeds/flux.html` : Voir le flux d'activités.
 - `/logout/` : Se déconnecter.
 
+
+
+### Note : 
+
+Je rajoute ici les rapports de flake8 pour la conformité de la pep8 :
+
+
+![image](https://github.com/El-GuiGui/Proj9-Developpez-une-application-Web-en-utilisant-Django/assets/148984263/df320a12-a0c7-43b5-b073-47861da9aa56)
+
+
