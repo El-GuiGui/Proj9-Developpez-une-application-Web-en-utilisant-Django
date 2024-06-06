@@ -31,7 +31,7 @@ LITReview est une application web développée en utilisant le framework Django,
 
     ```bash
     git clone https://github.com/El-GuiGui/Proj9-Developpez-une-application-Web-en-utilisant-Django.git
-    cd litrevu
+    cd .\Proj9-Developpez-une-application-Web-en-utilisant-Django\
     ```
 
 2. Créez un environnement virtuel et activez-le :
