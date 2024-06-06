@@ -1,3 +1,5 @@
+import socket
+
 """
 Django settings for litrevu project.
 
@@ -134,7 +136,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-import socket
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS += [ip[: ip.rfind(".")] + ".1" for ip in ips]

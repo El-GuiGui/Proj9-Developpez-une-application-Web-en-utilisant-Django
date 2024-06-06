@@ -3,6 +3,10 @@ from django.urls import reverse
 
 
 class LoginRequiredMiddleware:
+    """
+    Redirige les utilisateurs non authentifiés vers la page de connexion.
+    """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
